@@ -1,0 +1,18 @@
+<!-- src/main/resources/mapper/UserMapper.xml -->
+<mapper namespace="com.example.demo.mapper.UserMapper">
+  <select id="getUsers" resultType="com.example.demo.model.User">
+    SELECT * FROM users;
+  </select>
+  <select id="getUserById" parameterType="java.lang.Long" resultType="com.example.demo.model.User">
+    SELECT * FROM users WHERE id = #{id};
+  </select>
+  <insert id="createUser" parameterType="com.example.demo.model.User">
+    INSERT INTO users (name, email) VALUES (#{name}, #{email});
+  </insert>
+  <update id="updateUser" parameterType="com.example.demo.model.User">
+    UPDATE users SET name = #{name}, email = #{email} WHERE id = #{id};
+  </update>
+  <delete id="deleteUser" parameterType="java.lang.Long">
+    DELETE FROM users WHERE id = #{id};
+  </delete>
+</mapper>

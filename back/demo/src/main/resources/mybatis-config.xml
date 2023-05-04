@@ -1,0 +1,6 @@
+<!-- src/main/resources/mybatis-config.xml -->
+<configuration>
+  <mappers>
+    <mapper resource="mapper/UserMapper.xml"/>
+  </mappers>
+</configuration>
