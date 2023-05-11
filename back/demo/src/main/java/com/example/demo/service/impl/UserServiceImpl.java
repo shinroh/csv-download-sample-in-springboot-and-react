@@ -37,7 +37,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(Long id, User user) {
-        userMapper.updateUser(id, user);
+        user.setId(id);  // Userオブジェクトにidをセットする
+        userMapper.updateUser(user);
     }
 
     @Override

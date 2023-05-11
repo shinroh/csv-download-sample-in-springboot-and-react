@@ -2,9 +2,11 @@ import React, { useState } from "react"
 import { Container, Button, Table } from "semantic-ui-react"
 import "semantic-ui-css/semantic.min.css"
 import { useTranslation } from "react-i18next"
+import { handleChangeLanguage } from "../i18n/i18n"
 import axios from "axios"
 
 interface User {
+  id: number
   name: string
   age: number
   gender: string
@@ -16,16 +18,24 @@ const UserTable: React.FC = () => {
   const [users, setUsers] = useState<User[]>([])
 
   const handleDownloadCSV = async () => {
-    const response = await axios.get("/api/users")
+    const response = await axios.get("http://localhost:8080/api/users")
     const usersData: User[] = response.data
 
-    let csvContent = `"${t("name")}", "${t("age")}", "${t("gender")}"\n"${t(
-      "name-en"
-    )}", "${t("age-en")}", "${t("gender-en")}"\n`
+    let csvContent =
+      `${t("id")}, ${t("name")}, ${t("age")}, ${t("gender")}` + "\n"
+    handleChangeLanguage("ja")
+    csvContent += `${t("id")}, ${t("name")}, ${t("age")}, ${t("gender")}` + "\n"
+
+    console.log(t("name"))
 
     usersData.forEach((user) => {
-      csvContent += `"${user.name}", "${user.age}", "${user.gender}"\n`
+      console.log(user)
+      csvContent +=
+        `${user.id}, ${user.name}, ${user.age}, ${user.gender}` + "\n"
     })
+
+    setUsers(usersData)
+    console.log(usersData)
 
     const encodedUri = encodeURI(`data:text/csv;charset=utf-8,${csvContent}`)
     const link = document.createElement("a")
@@ -43,6 +53,7 @@ const UserTable: React.FC = () => {
       <Table celled>
         <Table.Header>
           <Table.Row>
+            <Table.HeaderCell>{t("id")}</Table.HeaderCell>
             <Table.HeaderCell>{t("name")}</Table.HeaderCell>
             <Table.HeaderCell>{t("age")}</Table.HeaderCell>
             <Table.HeaderCell>{t("gender")}</Table.HeaderCell>
@@ -51,6 +62,7 @@ const UserTable: React.FC = () => {
         <Table.Body>
           {users.map((user) => (
             <Table.Row>
+              <Table.Cell>{user.id}</Table.Cell>
               <Table.Cell>{user.name}</Table.Cell>
               <Table.Cell>{user.age}</Table.Cell>
               <Table.Cell>{user.gender}</Table.Cell>

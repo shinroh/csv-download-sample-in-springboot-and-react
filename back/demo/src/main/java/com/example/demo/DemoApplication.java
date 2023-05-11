@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-@SpringBootApplication(scanBasePackages={"com.example.demo.controller"})
+@SpringBootApplication(scanBasePackages={"com.example.demo"})
 @EntityScan("com.example.demo.model")
 public class DemoApplication {
 
